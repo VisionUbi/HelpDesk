@@ -1,0 +1,79 @@
+
+<h1></h1>
+
+<div class="modal-header">
+    <div class="row">
+        <h5 class="modal-title">Submit a ticket for IT/SAP Supports</h5>
+        <div>
+            Hardware & Software Resolve Time is 6 Hours(Outsources work is not included). While SAP issues may require one day to one week, depending upon the type of work.
+          </div>
+    </div>
+  
+   
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmit()">
+        <!-- Category -->
+        <div class="row">
+            <div class="col-xs-12 col-12 mb-2">
+              <div class="btn-group"
+                   dropdown
+                   >
+                <button id="button-state-change" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                        aria-controls="dropdown-state-change">
+                  Select Category <span class="caret"></span>
+                </button>
+                <ul id="dropdown-state-change" *dropdownMenu class="dropdown-menu"
+                    role="menu" aria-labelledby="button-state-change">
+                  <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+                  <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+                  <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Email -->
+          <div class="form-group">
+            <label for="dataField1">Enter  Email</label>
+            <input type="email" id="dataField1" class="form-control" [(ngModel)]="data.field1" name="field1">
+          </div>
+          <!-- Department -->
+          <div class="row">
+            <div class="col-xs-12 col-12 mb-2">
+              <div class="btn-group"
+                   dropdown
+                   >
+                <button id="button-state-change" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                        aria-controls="dropdown-state-change">
+                  Select Department <span class="caret"></span>
+                </button>
+                <ul id="dropdown-state-change" *dropdownMenu class="dropdown-menu"
+                    role="menu" aria-labelledby="button-state-change">
+                  <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+                  <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+                  <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Subject -->
+          <div class="form-group">
+            <label for="dataField2">Subject</label>
+            <input type="text" id="dataField2" class="form-control" [(ngModel)]="data.field2" name="field2">
+          </div> 
+          <!-- Description -->
+          <div class="form-group">
+            <label for="dataField2">Description</label>
+            <input type="text" id="dataField2" class="form-control" [(ngModel)]="data.field2" name="field2">
+          </div> 
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="dataField2">Phone</label>
+            <input type="number" id="dataField2" class="form-control" [(ngModel)]="data.field2" name="field2">
+          </div> 
+          
+      <!-- Add more fields as needed -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  
