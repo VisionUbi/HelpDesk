@@ -1,0 +1,14 @@
+<div class="modal-header text-center">
+    <div class="row">
+        <h5 class="modal-title">Departments</h5>
+    </div>
+    
+<div class="modal-body">
+    <!-- <button class="btn btn-primary mb-3" (click)="openCreateModal(createModal)">Create Category</button> -->
+  
+    <ul class="list-group">
+      <li *ngFor="let category of categorys" class="list-group-item text-center">
+        {{ category.name }}
+      </li>
+    </ul>
+  </div>

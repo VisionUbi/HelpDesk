@@ -1,7 +1,7 @@
 
 <h1></h1>
 
-<div class="modal-header">
+<div class="modal-header text-center">
     <div class="row">
         <h5 class="modal-title">Submit a ticket for IT/SAP Supports</h5>
         <div>
@@ -13,49 +13,47 @@
   </div>
   <div class="modal-body">
     <form (ngSubmit)="onSubmit()">
-        <!-- Category -->
-        <div class="row">
-            <div class="col-xs-12 col-12 mb-2">
-              <div class="btn-group"
-                   dropdown
-                   >
-                <button id="button-state-change" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-                        aria-controls="dropdown-state-change">
-                  Select Category <span class="caret"></span>
-                </button>
-                <ul id="dropdown-state-change" *dropdownMenu class="dropdown-menu"
-                    role="menu" aria-labelledby="button-state-change">
-                  <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
+ 
+             <!-- Category and Department Buttons -->
+             <div class="row">
+              <div class="col-6 mb-2">
+                  <div class="btn-group w-100" dropdown>
+                      <button id="button-category" dropdownToggle type="button" class="btn btn-primary dropdown-toggle w-100"
+                              aria-controls="dropdown-category">
+                          Select Category <span class="caret"></span>
+                      </button>
+                     
+                      <ul id="dropdown-category" *dropdownMenu class="dropdown-menu w-100" role="menu" aria-labelledby="button-category">
+                          <li *ngFor="let category of categorys" class="list-group-item text-center">    
+                             <a class="dropdown-item" >{{category.name}}</a>
+                          </li>
+                      </ul>
+                  </div>
               </div>
-            </div>
+  
+              <div class="col-6 mb-2">
+                  <div class="btn-group w-100" dropdown>
+                      <button id="button-department" dropdownToggle type="button" class="btn btn-primary dropdown-toggle w-100"
+                              aria-controls="dropdown-department">
+                          Select Department <span class="caret"></span>
+                      </button>
+                      <ul id="dropdown-department" *dropdownMenu class="dropdown-menu w-100" role="menu" aria-labelledby="button-department">
+                          <li *ngFor="let department of departments" class="list-group-item text-center">    
+                            <a class="dropdown-item" >{{department.name}}</a>
+                         </li>
+                    
+                      </ul>
+                  </div>
+              </div>
           </div>
+
+          
           <!-- Email -->
           <div class="form-group">
             <label for="dataField1">Enter  Email</label>
             <input type="email" id="dataField1" class="form-control" [(ngModel)]="data.field1" name="field1">
           </div>
-          <!-- Department -->
-          <div class="row">
-            <div class="col-xs-12 col-12 mb-2">
-              <div class="btn-group"
-                   dropdown
-                   >
-                <button id="button-state-change" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-                        aria-controls="dropdown-state-change">
-                  Select Department <span class="caret"></span>
-                </button>
-                <ul id="dropdown-state-change" *dropdownMenu class="dropdown-menu"
-                    role="menu" aria-labelledby="button-state-change">
-                  <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
-                  <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
+         
           <!-- Subject -->
           <div class="form-group">
             <label for="dataField2">Subject</label>
@@ -73,7 +71,7 @@
           </div> 
           
       <!-- Add more fields as needed -->
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
   </div>
   

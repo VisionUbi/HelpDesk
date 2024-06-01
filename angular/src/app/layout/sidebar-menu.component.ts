@@ -19,7 +19,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
     menuItemsMap: { [key: number]: MenuItem } = {};
     activatedMenuItems: MenuItem[] = [];
     routerEvents: BehaviorSubject<RouterEvent> = new BehaviorSubject(undefined);
-    homeRoute = '/app/about';
+    homeRoute = '/app/my-ticket';
 
     constructor(injector: Injector, private router: Router) {
         super(injector);
@@ -43,7 +43,8 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         return [
             new MenuItem(this.l('CreateTicket'), '/app/create-ticket', 'fa-solid fa-plus'),
             new MenuItem(this.l('MyTicket'), '/app/my-ticket', 'fa-solid fa-circle-check'),
-            new MenuItem(this.l('HomePage'), '/app/home', 'fas fa-home'),
+            new MenuItem(this.l('Department'), '/app/department', 'fas fa-home'),
+            new MenuItem(this.l('Category'), '/app/category', 'fas fa-home'),
             new MenuItem(
                 this.l('Roles'),
                 '/app/roles',

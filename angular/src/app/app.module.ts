@@ -13,7 +13,6 @@ import { AppComponent } from './app.component';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
 import { HomeComponent } from '@app/home/home.component';
-import { AboutComponent } from '@app/about/about.component';
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
@@ -40,12 +39,14 @@ import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { CreateTicketComponent } from './create-ticket/create-ticket.component';
 import { MyTicketComponent } from './my-ticket/my-ticket.component';
+import { CategoryComponent } from './category/category.component';
+import { DepartmentComponent } from './department/department.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        AboutComponent,
         // tenants
         TenantsComponent,
         CreateTenantDialogComponent,
@@ -71,7 +72,9 @@ import { MyTicketComponent } from './my-ticket/my-ticket.component';
         SidebarUserPanelComponent,
         SidebarMenuComponent,
         CreateTicketComponent,
-        MyTicketComponent
+        MyTicketComponent,
+        CategoryComponent,
+        DepartmentComponent
     ],
     imports: [
         CommonModule,
@@ -87,6 +90,7 @@ import { MyTicketComponent } from './my-ticket/my-ticket.component';
         ServiceProxyModule,
         SharedModule,
         NgxPaginationModule,
+        NgbModule
         
     ],
     providers: []
