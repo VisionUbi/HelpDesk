@@ -42,6 +42,9 @@ import { MyTicketComponent } from './my-ticket/my-ticket.component';
 import { CategoryComponent } from './category/category.component';
 import { DepartmentComponent } from './department/department.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateOrEditDepartmentComponent } from './department/create-or-edit-department/create-or-edit-department.component';
+import { TableModule } from 'primeng/table';
+import { CreateOrEditCategoryComponent } from './category/create-or-edit-category/create-or-edit-category.component';
 
 @NgModule({
     declarations: [
@@ -74,7 +77,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         CreateTicketComponent,
         MyTicketComponent,
         CategoryComponent,
-        DepartmentComponent
+        DepartmentComponent,
+        CreateOrEditDepartmentComponent,
+        CreateOrEditCategoryComponent
     ],
     imports: [
         CommonModule,
@@ -90,7 +95,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         ServiceProxyModule,
         SharedModule,
         NgxPaginationModule,
-        NgbModule
+        NgbModule,
+        TableModule
         
     ],
     providers: []

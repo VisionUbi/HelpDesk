@@ -1,37 +1,53 @@
 
-<div class="modal-header text-center">
+<div class="modal-header">
     <div class="row">
         <h5 class="modal-title">Departments</h5>
     </div>
     
 <div class="modal-body">
-    <button class="btn btn-primary mb-3" (click)="openCreateModal(createModal)">Create Department</button>
-  
-    <ul class="list-group">
-      <li *ngFor="let department of departments" class="list-group-item text-center">
-        {{ department.name }}
-      </li>
-    </ul>
+                
+    <div class="container">
+        <div class="row">
+          <div class="col text-right">
+            <button id="btn_create_projectFile" (click)="createProjectFile()" class="btn btn-primary blue">
+              <i class="fa fa-plus"></i> Create Department
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    <p-table [value]="departments" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>departments</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-department>
+            <tr>
+                <td> {{ department.name }} </td>
+                <td>  <button
+                    type="button"
+                    class="btn btn-sm bg-secondary"
+                    (click)="createOrEditProjectFileModal.show(department.id)"
+            >
+                <i class="fas fa-pencil-alt"></i>
+                {{ "Edit" | localize }}
+            </button>
+            <button
+                    type="button"
+                    class="btn btn-sm bg-danger mx-2" 
+                    (click)="deleteDepartment(department.id)"
+            >
+                <i class="fas fa-trash"></i>
+                {{ "Delete" | localize }}
+            </button></td>
+            </tr>
+        </ng-template>
+    </p-table>
+
   </div>
-<ng-template #createModal let-modal>
-  <div class="modal-header" id="modal">
-    <h5 class="modal-title">Create Department</h5>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="false">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="form-group">
-      <label for="departmentName">Name</label>
-      <input type="text" id="departmentName" class="form-control" [(ngModel)]="newDepartmentName">
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="createDepartment()">Create</button>
-  </div>
-</ng-template>  
-   
-  </div>
+  <app-create-or-edit-department #createOrEditProjectFileModal (modalSave)="getDepartments()"> </app-create-or-edit-department>
+ 
    
   

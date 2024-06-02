@@ -6588,6 +6588,13 @@ pretty-bytes@^5.3.0:
   resolved "https://registry.npmjs.org/pretty-bytes/-/pretty-bytes-5.6.0.tgz"
   integrity sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==
 
+primeng@^17.18.0:
+  version "17.18.0"
+  resolved "https://registry.yarnpkg.com/primeng/-/primeng-17.18.0.tgz#d49a1c662329357cc782fc6b67ff97b5f01a0915"
+  integrity sha512-EcvU/0Ex9QoBR6g6db9fDTCTAmzokW70TV5Oroy2gdvXRr3eqlflnOBoArQsmxTaw1oxSsu68YVj3RvcKYWhTg==
+  dependencies:
+    tslib "^2.3.0"
+
 proc-log@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/proc-log/-/proc-log-3.0.0.tgz"

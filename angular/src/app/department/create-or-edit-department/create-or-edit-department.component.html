@@ -1,0 +1,31 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span *ngIf="departments.id">Edit Department</span>
+                    <span *ngIf="!departments.id">Create Department</span>
+                </h4>                    
+             <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+            </div>
+            <form *ngIf="active"  novalidate (ngSubmit)="save()" autocomplete="off">
+            <!-- Body -->
+            <div class="modal-body">
+                <div class="my-3">
+                    <label class="form-label" for="ProjectFile_Content">Department Name</label>
+                    <input type="text" #ProjectFile_Content="ngModel" id="ProjectFile_Content" class="form-control" [(ngModel)]="departments.name" name="Content"    />
+                </div>
+
+
+            </div>
+                            <!-- Footer -->
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">Cancel</button>
+                <button type="submit" class="btn btn-primary blue"  ><i class="fa fa-save"></i> <span>Save</span></button>
+            </div>
+        </form>
+        </div>
+    </div>
+		 
+</div>

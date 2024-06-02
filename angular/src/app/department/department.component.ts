@@ -1,29 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, Injector, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DepartmentDto, DepartmentServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditDepartmentComponent } from './create-or-edit-department/create-or-edit-department.component';
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
   styleUrl: './department.component.css'
 })
-export class DepartmentComponent {
+export class DepartmentComponent extends AppComponentBase{
+  @ViewChild('createOrEditProjectFileModal', { static: true }) createOrEditProjectFileModal: CreateOrEditDepartmentComponent;
   createDepartmentForm: FormGroup;
   departments: DepartmentDto[];
+  showModal = false;
   newDepartmentName: string = '';
   constructor(
-    private modalService: NgbModal,
+    injector: Injector,
      private fb: FormBuilder,
      private departmentServiceProxy: DepartmentServiceProxy,
 
-    ) {}
-    openCreateModal(content: any) {
-      const modalRef = this.modalService.open(content, { centered: true });
-      // Optionally, add a listener to close the modal when clicking outside
-      modalRef.result.then(() => {}, () => {});
-    }
+    ) {        super(injector);}
+    createProjectFile(): void {
+      this.createOrEditProjectFileModal.show();   
+  }
 
+   
   ngOnInit(): void {
     this.getDepartments();
     this.createDepartmentForm = this.fb.group({
@@ -35,14 +38,25 @@ export class DepartmentComponent {
       this.departments = result;
     })
   }
-  createDepartment() {
-    this.departmentServiceProxy.createDepartment(this.newDepartmentName).subscribe((result) => {
-      this.getDepartments();
-    }, error => {
-      console.error(error);
-    }).add(() => {
-      this.modalService.dismissAll(); // Ensure this is called after successful operation
-    });
-  }
-  
+ 
+  deleteDepartment(id: number): void {
+    this.message.confirm(
+        '',
+        this.l('AreYouSure'),
+        (isConfirmed) => {
+            if (isConfirmed) {
+                this.departmentServiceProxy.deleteDepartment(id)
+                    .subscribe(() => {
+                      this.getDepartments();
+                        this.notify.success(this.l('SuccessfullyDeleted'));
+                    });
+            }
+        }
+    );
+}
+  resetFilters(): void {
+    this.newDepartmentName = '';
+    this.departments= undefined;
+    this.getDepartments();
+}
 }
