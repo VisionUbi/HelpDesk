@@ -59,10 +59,7 @@ namespace HelpDesk.Tickets
             }
            
         }
-        public async Task UpdateCategory(TicketDto input)
-        {
-
-        }
+      
         public async Task<List<TicketDto>> GetTickets()
         {
             
@@ -90,6 +87,7 @@ namespace HelpDesk.Tickets
             var finalResult = new List<TicketDto>();
             foreach(var ticket in results)
             {
+                var assignedToUser = users.FirstOrDefault(a => a.Id == ticket.AssignedTo);
                 var ticketDto = new TicketDto
                 {
                     Id = ticket.Id.ToString(),
@@ -99,7 +97,12 @@ namespace HelpDesk.Tickets
                     Phone = ticket.Phone,
                     CategoryId = ticket.CategoryId,
                     DepartmentId = ticket.DepartmentId,
-                    AssignedToName = users.FirstOrDefault(a => a.Id == ticket.AssignedTo)?.Name,
+                    AssignedTo = ticket.AssignedTo,
+                    AssignedToName = assignedToUser != null ? new UserListDto
+                    {
+                        Name = assignedToUser.Name,
+                        Value = assignedToUser.Id
+                    } : null,
                     Priority = ticket.Priority,
                     Remarks = ticket.Remarks,
                     Status = ticket.Status,
@@ -107,8 +110,11 @@ namespace HelpDesk.Tickets
                     CreationDate = ticket.CreationTime.ToString(),
                     CreatedBy = users.FirstOrDefault(a => a.Id == ticket.CreatorUserId)?.Name,
                     DepartmentName = departments.FirstOrDefault(a=> a.Id == ticket.DepartmentId)?.Name,
-                    Users = users.Select(a => a.Name).ToList()
-
+                    Users = users.Select(a => new UserListDto
+                    {
+                        Name = a.Name,
+                        Value = a.Id
+                    }).ToList()
                 };
 
                 finalResult.Add(ticketDto);

@@ -13,7 +13,7 @@ namespace HelpDesk.Tickets
         public  string Subject { get; set; }
         public  string Email { get; set; }
         public  string Description { get; set; }
-        public  int Phone { get; set; }
+        public  string Phone { get; set; }
         public  int CategoryId { get; set; }
         public  int DepartmentId { get; set; }
         public  int AssignedTo { get; set; }
@@ -22,10 +22,17 @@ namespace HelpDesk.Tickets
         public  string CreationDate { get; set; }
         public  string CreatedBy { get; set; }
         public  string DepartmentName { get; set; }
-        public  string AssignedToName { get; set; }
+        public UserListDto AssignedToName { get; set; }
         public virtual TicketStatus Status { get; set; }
         public virtual string DepartmentType { get; set; }
-        public virtual List<String> Users { get; set; }
+        public virtual List<UserListDto> Users { get; set; }
 
     }
+    public class UserListDto
+    {
+        public string Name { get; set; }
+        public long Value { get; set; }
+    }
+
 }
+

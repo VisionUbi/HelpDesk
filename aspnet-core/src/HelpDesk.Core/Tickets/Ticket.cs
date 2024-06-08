@@ -17,7 +17,7 @@ namespace HelpDesk.Tickets
         public virtual string Description { get; set; }
         public virtual string Email { get; set; }
         public virtual TicketStatus Status { get; set; }
-        public virtual int Phone { get; set; }
+        public virtual string Phone { get; set; }
         public virtual int CategoryId { get; set; }
         public virtual int DepartmentId { get; set; }
         public virtual int AssignedTo { get; set; }

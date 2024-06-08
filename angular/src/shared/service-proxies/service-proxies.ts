@@ -1774,58 +1774,6 @@ export class TicketServiceProxy {
     }
 
     /**
-     * @param body (optional) 
-     * @return Success
-     */
-    updateCategory(body: TicketDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Ticket/UpdateCategory";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdateCategory(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdateCategory(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processUpdateCategory(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
      * @return Success
      */
     getTickets(): Observable<TicketDto[]> {
@@ -4324,7 +4272,7 @@ export class TicketDto implements ITicketDto {
     subject: string | undefined;
     email: string | undefined;
     description: string | undefined;
-    phone: number;
+    phone: string | undefined;
     categoryId: number;
     departmentId: number;
     assignedTo: number;
@@ -4333,10 +4281,10 @@ export class TicketDto implements ITicketDto {
     creationDate: string | undefined;
     createdBy: string | undefined;
     departmentName: string | undefined;
-    assignedToName: string | undefined;
+    assignedToName: UserListDto;
     status: TicketStatus;
     departmentType: string | undefined;
-    users: string[] | undefined;
+    users: UserListDto[] | undefined;
 
     constructor(data?: ITicketDto) {
         if (data) {
@@ -4362,13 +4310,13 @@ export class TicketDto implements ITicketDto {
             this.creationDate = _data["creationDate"];
             this.createdBy = _data["createdBy"];
             this.departmentName = _data["departmentName"];
-            this.assignedToName = _data["assignedToName"];
+            this.assignedToName = _data["assignedToName"] ? UserListDto.fromJS(_data["assignedToName"]) : <any>undefined;
             this.status = _data["status"];
             this.departmentType = _data["departmentType"];
             if (Array.isArray(_data["users"])) {
                 this.users = [] as any;
                 for (let item of _data["users"])
-                    this.users.push(item);
+                    this.users.push(UserListDto.fromJS(item));
             }
         }
     }
@@ -4395,13 +4343,13 @@ export class TicketDto implements ITicketDto {
         data["creationDate"] = this.creationDate;
         data["createdBy"] = this.createdBy;
         data["departmentName"] = this.departmentName;
-        data["assignedToName"] = this.assignedToName;
+        data["assignedToName"] = this.assignedToName ? this.assignedToName.toJSON() : <any>undefined;
         data["status"] = this.status;
         data["departmentType"] = this.departmentType;
         if (Array.isArray(this.users)) {
             data["users"] = [];
             for (let item of this.users)
-                data["users"].push(item);
+                data["users"].push(item.toJSON());
         }
         return data;
     }
@@ -4419,7 +4367,7 @@ export interface ITicketDto {
     subject: string | undefined;
     email: string | undefined;
     description: string | undefined;
-    phone: number;
+    phone: string | undefined;
     categoryId: number;
     departmentId: number;
     assignedTo: number;
@@ -4428,10 +4376,10 @@ export interface ITicketDto {
     creationDate: string | undefined;
     createdBy: string | undefined;
     departmentName: string | undefined;
-    assignedToName: string | undefined;
+    assignedToName: UserListDto;
     status: TicketStatus;
     departmentType: string | undefined;
-    users: string[] | undefined;
+    users: UserListDto[] | undefined;
 }
 
 export enum TicketStatus {
@@ -4584,6 +4532,53 @@ export class UserDtoPagedResultDto implements IUserDtoPagedResultDto {
 export interface IUserDtoPagedResultDto {
     items: UserDto[] | undefined;
     totalCount: number;
+}
+
+export class UserListDto implements IUserListDto {
+    name: string | undefined;
+    value: number;
+
+    constructor(data?: IUserListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.value = _data["value"];
+        }
+    }
+
+    static fromJS(data: any): UserListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["value"] = this.value;
+        return data;
+    }
+
+    clone(): UserListDto {
+        const json = this.toJSON();
+        let result = new UserListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserListDto {
+    name: string | undefined;
+    value: number;
 }
 
 export class UserLoginInfoDto implements IUserLoginInfoDto {

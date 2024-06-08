@@ -34,7 +34,7 @@ export class CreateTicketComponent extends AppComponentBase{
   hideModal() {
     this.bsModalRef.hide();
   }
-  createTicekt() { 
+  createTicekt() {  
     this.ticket.departmentType = this.selectedDescription;
     this.ticket.departmentId = this.selectedDepartment;
     this.ticket.categoryId = this.selectedCategory;

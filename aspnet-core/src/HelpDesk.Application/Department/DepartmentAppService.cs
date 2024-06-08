@@ -44,7 +44,7 @@ namespace HelpDesk.Departments
         }
         public async Task CreateDepartment(DepartmentDto input)
         {
-            var existingDepartment = await _departmentRepository.GetAll().Where(a => a.Name == input.Name).FirstOrDefaultAsync();
+            var existingDepartment = await _departmentRepository.GetAll().Where(a => a.Name == input.Name && a.Description == input.Description).FirstOrDefaultAsync();
             if (existingDepartment != null)
             {
                 throw new UserFriendlyException("This name already exist");

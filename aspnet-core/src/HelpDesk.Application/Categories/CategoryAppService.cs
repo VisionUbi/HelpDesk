@@ -55,7 +55,7 @@ namespace HelpDesk.Categories
         }
         public async Task CreateCategory(CategoryDto input)
         {
-            var existingCategory = await _categoryRepository.GetAll().Where(a => a.Name == input.Name).FirstOrDefaultAsync();
+            var existingCategory = await _categoryRepository.GetAll().Where(a => a.Name == input.Name && a.Description == input.Description).FirstOrDefaultAsync();
             if (existingCategory != null)
             {
                 throw new UserFriendlyException("This name already exist");

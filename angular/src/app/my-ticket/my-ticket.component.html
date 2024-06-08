@@ -2,8 +2,8 @@
 <div *ngIf="isAdmin">
     <div class="modal-header">
         <div class="row">
-        <h5 class="modal-title">All Tickets</h5>
-    </div>
+            <h5 class="modal-title">All Tickets</h5>
+        </div>
     </div>
     <div class="modal-body">   
         <p-table [value]="tickets" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" 
@@ -31,47 +31,48 @@
                     <td>{{ ticket.description }}</td>
                     <td>{{ ticket.departmentName }}</td>
                     <td>{{ ticket.phone }}</td>
-                    <td>
+                    <td> 
                         <p-dropdown 
-                        [options]="ticket.users" 
-                        [(ngModel)]="ticket.assignedTo" 
-                        name="AssignedTo"
-                        optionLabel="name"
-                        optionValue="id"
-                        class="p-fluid"
-                        [showClear]="true"
-                        [filter]="true"
-                        required
-                        placeholder="Select Assignee">
-                    </p-dropdown>
-                    
+                            [options]="ticket.users" 
+                            [(ngModel)]="ticket.assignedTo" 
+                            name="AssignedTo"
+                            optionValue="value"
+                            optionLabel="name"
+                            class="p-fluid"
+                            [showClear]="true"
+                            [filter]="true"
+                            required
+                            placeholder="Select Assignee">
+                        </p-dropdown>
                     </td>
                     <td>
                         <p-dropdown 
-                        [options]="statuses" 
-                        [(ngModel)]="ticket.status" 
-                        name="Status"
-                        class="p-fluid"
-                        optionValue = "value"
-                        optionLabel="name" 
-                        [showClear]="true"
-                        [filter]="true"
-                        required
-                        placeholder="Select Status" ></p-dropdown>
-                      </td>
-                    <td>{{ ticket.remarks === null ? 'N/A' : ticket.remarks }}</td>
+                            [options]="statuses" 
+                            [(ngModel)]="ticket.status" 
+                            name="Status"
+                            optionValue="value"
+                            optionLabel="name"
+                            class="p-fluid"
+                            [showClear]="true"
+                            [filter]="true"
+                            required
+                            placeholder="Select Status">
+                        </p-dropdown>
+                    </td>
                     <td>
-                        <button type="submit" class="btn btn-success" (click)="updateTicekt(ticket)">
+                        <input   type="text" pInputText [(ngModel)]="ticket.remarks"> 
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-success" (click)="updateTicket(ticket)">
                             <i class="fas fa-check-circle"></i> Submit
                         </button>
                     </td>
                 </tr>
             </ng-template>
         </p-table>
-      </div>
-
-   
+    </div>
 </div>
+
 <div *ngIf="!isAdmin">
     <div class="modal-header">
         <div class="row">

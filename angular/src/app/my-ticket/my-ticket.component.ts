@@ -8,29 +8,24 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-my-ticket',
   templateUrl: './my-ticket.component.html',
-  styleUrl: './my-ticket.component.css'
+  styleUrls: ['./my-ticket.component.css']
 })
-export class MyTicketComponent extends AppComponentBase{
-  isAdmin : boolean=false;
-  ITAdmin : boolean=false;
-  ticket: TicketDto = new TicketDto();
-  MaintenanceAdmin : boolean=false;
+export class MyTicketComponent extends AppComponentBase {
+  isAdmin: boolean = false;
+  ITAdmin: boolean = false;
+  MaintenanceAdmin: boolean = false;
   tickets: TicketDto[] = [];
   statuses: { name: string, value: number }[] = [
     { name: 'Open', value: 0 },
     { name: 'Rejected', value: 1 },
     { name: 'Pending', value: 2 },
-    { name: 'WaitingForInstructions', value: 3 },
-    { name: 'WaitingForApproval', value: 4 },
-    { name: 'OutSourced', value: 5 }
+    { name: 'Resolved', value: 3 },
+    { name: 'WaitingForInstructions', value: 4 },
+    { name: 'WaitingForApproval', value: 5 },
+    { name: 'OutSourced', value: 6 }
   ];
-  selectedAssignee :any;
+  selectedAssignee: any;
 
-  ngOnInit(): void {
-    this.checkRole(this.abpSession.userId); 
-    this.getAllTickets();
-  }
-  
   constructor(
     public bsModalRef: BsModalRef,
     private categoryServiceProxy: CategoryServiceProxy,
@@ -39,44 +34,46 @@ export class MyTicketComponent extends AppComponentBase{
     private abpSession: AbpSessionService,
     injector: Injector,
     private _router: Router
-    ) {
-      super(injector);
+  ) {
+    super(injector);
   }
 
-  updateTicekt(ticket: any) {
-    // this.ticket.assignedTo = ticket.assignedTo;
-    this.ticket.id = ticket
-    this.ticket.status = ticket.status;
-    this.ticket.remarks = ticket.remarks;
-    this.ticketServiceProxy.createCategory(this.ticket).subscribe((result) => {
-      this.notify.success(this.l('Ticket Created Successfully'));
-      this._router.navigate(['/app/my-ticket']);
-    })
+  ngOnInit(): void {
+    this.checkRole(this.abpSession.userId); 
+    this.getAllTickets();
   }
-  getAllTickets(){
-   
-    this.ticketServiceProxy.getTickets().subscribe((result) => {
-      this.tickets = result;
-      this.tickets.forEach((ticket) => {
-        if (Array.isArray(ticket.users)) {
-          ticket.users = ticket.users.map(user => user.toString());
-          
-        } else {
-          ticket.users = [];
-        }
-      });
+
+  updateTicket(ticket: TicketDto) {
+    const updatedTicket = new TicketDto();
+    updatedTicket.id = ticket.id;
+    updatedTicket.assignedTo = ticket.assignedTo;
+    updatedTicket.status = ticket.status;
+    updatedTicket.remarks = ticket.remarks;
+
+    this.ticketServiceProxy.createCategory(updatedTicket).subscribe((result) => {
+      this.notify.success(this.l('Ticket Updated Successfully'));
+      this.getAllTickets();
     });
   }
-  
-  
-  checkRole(userId : number){
-    if(userId != null){
+
+  getAllTickets() {
+    this.ticketServiceProxy.getTickets().subscribe((result) => {
+      this.tickets = result;
+      // this.tickets.forEach((ticket) => {
+      //   if (!Array.isArray(ticket.users)) {
+      //     ticket.users = [];
+      //   }
+      // });
+    });
+  }
+
+  checkRole(userId: number) {
+    if (userId != null) {
       this.ticketServiceProxy.getUserRoleByUserId(userId).subscribe((result) => {
-        this.isAdmin = result.roleId == 1 ? true : false;
-        this.ITAdmin = result.roleId == 2 ? true : false;
-        this.MaintenanceAdmin = result.roleId == 3 ? true : false;
-      })
-      this.isAdmin = true;
+        this.isAdmin = result.roleId === 1;
+        this.ITAdmin = result.roleId === 2;
+        this.MaintenanceAdmin = result.roleId === 3;
+      });
     }
   }
 }
