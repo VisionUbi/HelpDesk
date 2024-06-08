@@ -1,14 +1,68 @@
-<div class="modal-header text-center">
-    <div class="row">
-        <h5 class="modal-title">Categories</h5>
-    </div>
-    
-<div class="modal-body">
-    <!-- <button class="btn btn-primary mb-3" (click)="openCreateModal(createModal)">Create Category</button> -->
-  
-    <ul class="list-group">
-      <li *ngFor="let category of categorys" class="list-group-item text-center">
-        {{ category.name }}
-      </li>
-    </ul>
+
+<div class="modal-header">
+  <div class="row">
+      <h5 class="modal-title">Categories</h5>
   </div>
+  
+<div class="modal-body">
+              
+  <div class="container">
+      <div class="row">
+        <div class="col text-right">
+          <button id="btn_create_projectFile" (click)="createProjectFile()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i> Create Category
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-2">
+      <label for="descriptions">Filter Data with Type</label>
+      <p-dropdown 
+        [options]="descriptions" 
+        [(ngModel)]="selectedDescription" 
+        name="descriptions"
+        class="p-fluid"
+        optionValue = "name"
+        optionLabel="name" 
+        [showClear]="true"
+        [filter]="true"
+        (onChange)="getCategories(selectedDescription)"
+        required
+        placeholder="Filter Data with Type" ></p-dropdown>
+      </div>
+
+    
+  <p-table [value]="categorys" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Category</th>
+              <th>Actions</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-category>
+          <tr>
+              <td> {{ category.name }} </td>
+              <td>  <button
+                  type="button"
+                  class="btn btn-sm bg-secondary"
+                  (click)="createOrEditCategoryModal.show(category.id)"
+          >
+              <i class="fas fa-pencil-alt"></i>
+              {{ "Edit" | localize }}
+          </button>
+          <button
+                  type="button"
+                  class="btn btn-sm bg-danger mx-2" 
+                  (click)="deletecategory(category.id)"
+          >
+              <i class="fas fa-trash"></i>
+              {{ "Delete" | localize }}
+          </button></td>
+          </tr>
+      </ng-template>
+  </p-table>
+
+</div>
+<app-create-or-edit-category #createOrEditCategoryModal (modalSave)="getCategories(selectedDescription)"> </app-create-or-edit-category>
+
+ 

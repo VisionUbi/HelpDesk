@@ -16,7 +16,19 @@
                     <label class="form-label" for="ProjectFile_Content">Department Name</label>
                     <input type="text" #ProjectFile_Content="ngModel" id="ProjectFile_Content" class="form-control" [(ngModel)]="departments.name" name="Content"    />
                 </div>
-
+                <div class="col-12 mb-2">
+                    <p-dropdown 
+                      [options]="descriptions" 
+                      [(ngModel)]="selectedDescription" 
+                      name="descriptions"
+                      class="p-fluid"
+                      optionValue = "name"
+                      optionLabel="name" 
+                      [showClear]="true"
+                      [filter]="true"
+                      required
+                      placeholder="Select Type" ></p-dropdown>
+                    </div>
 
             </div>
                             <!-- Footer -->

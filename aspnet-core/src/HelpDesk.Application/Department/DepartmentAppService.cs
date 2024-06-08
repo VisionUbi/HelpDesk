@@ -25,6 +25,7 @@ namespace HelpDesk.Departments
             var output = new DepartmentDto
             {
                 Id = department.Id,
+                Description = department.Description,
                 Name = department.Name
             };
 
@@ -34,23 +35,24 @@ namespace HelpDesk.Departments
         {
             if (input.Id == null || input.Id == 0)
             {
-                await CreateDepartment(input.Name);
+                await CreateDepartment(input);
             }
             else
             {
                 await UpdateDepartment(input);
             }
         }
-        public async Task CreateDepartment(string input)
+        public async Task CreateDepartment(DepartmentDto input)
         {
-            var existingDepartment = await _departmentRepository.GetAll().Where(a => a.Name == input).FirstOrDefaultAsync();
+            var existingDepartment = await _departmentRepository.GetAll().Where(a => a.Name == input.Name).FirstOrDefaultAsync();
             if (existingDepartment != null)
             {
                 throw new UserFriendlyException("This name already exist");
             }
             var data = new Department
             {
-                Name = input,
+                Name = input.Name,
+                Description = input.Description,
                 CreatorUserId = AbpSession.UserId
             };
             await _departmentRepository.InsertAsync(data);
@@ -60,17 +62,19 @@ namespace HelpDesk.Departments
             var existingDepartment = await _departmentRepository.GetAll().Where(a => a.Id == input.Id).FirstOrDefaultAsync();
 
             existingDepartment.Name = input.Name;
+            existingDepartment.Description = input.Description;
             existingDepartment.LastModifierUserId = AbpSession.UserId;
 
             await _departmentRepository.UpdateAsync(existingDepartment);
         }
-        public async Task<List<DepartmentDto>> GetAllDepartments()
-        {
-            var department = await _departmentRepository.GetAllAsync();
+        public async Task<List<DepartmentDto>> GetAllDepartments(string description)
+        { 
+            var department = await _departmentRepository.GetAll().Where(a => a.Description == description).ToListAsync();
             var departmentNameList = department.Select(department => new DepartmentDto
             {
                 Id = department.Id,
-                Name = department.Name
+                Name = department.Name,
+                Description = department.Description
             }).ToList();
             return departmentNameList;
         }

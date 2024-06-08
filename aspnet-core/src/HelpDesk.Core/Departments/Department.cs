@@ -12,5 +12,6 @@ namespace HelpDesk.Departments
     public class Department : FullAuditedEntity
     {
         public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
     }
 }

@@ -11,11 +11,16 @@ import { AppComponentBase } from '@shared/app-component-base';
   styleUrl: './department.component.css'
 })
 export class DepartmentComponent extends AppComponentBase{
-  @ViewChild('createOrEditProjectFileModal', { static: true }) createOrEditProjectFileModal: CreateOrEditDepartmentComponent;
+  @ViewChild('createOrEditDepartmentModal', { static: true }) createOrEditDepartmentModal: CreateOrEditDepartmentComponent;
   createDepartmentForm: FormGroup;
   departments: DepartmentDto[];
   showModal = false;
   newDepartmentName: string = '';
+  descriptions: { name: string; value: string }[] = [
+    { name: 'IT',value: 'IT' },
+    { name: 'Maintainance',value: 'Maintainance' },
+  ];
+  selectedDescription : string = '';
   constructor(
     injector: Injector,
      private fb: FormBuilder,
@@ -23,18 +28,19 @@ export class DepartmentComponent extends AppComponentBase{
 
     ) {        super(injector);}
     createProjectFile(): void {
-      this.createOrEditProjectFileModal.show();   
+      this.createOrEditDepartmentModal.show();   
   }
 
    
   ngOnInit(): void {
-    this.getDepartments();
+    this.selectedDescription = this.descriptions[0].value;
+    this.getDepartments(this.selectedDescription);
     this.createDepartmentForm = this.fb.group({
       name: ['', Validators.required]
     });
   }
-  getDepartments() {
-    this.departmentServiceProxy.getAllDepartments().subscribe((result) => {
+  getDepartments(description : string) {
+    this.departmentServiceProxy.getAllDepartments(description).subscribe((result) => {
       this.departments = result;
     })
   }
@@ -47,7 +53,7 @@ export class DepartmentComponent extends AppComponentBase{
             if (isConfirmed) {
                 this.departmentServiceProxy.deleteDepartment(id)
                     .subscribe(() => {
-                      this.getDepartments();
+                      this.getDepartments(this.selectedDescription);
                         this.notify.success(this.l('SuccessfullyDeleted'));
                     });
             }
@@ -57,6 +63,6 @@ export class DepartmentComponent extends AppComponentBase{
   resetFilters(): void {
     this.newDepartmentName = '';
     this.departments= undefined;
-    this.getDepartments();
+    this.getDepartments(this.selectedDescription);
 }
 }

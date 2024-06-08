@@ -15,7 +15,11 @@ export class CreateOrEditDepartmentComponent extends AppComponentBase{
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
   active = false;
   saving = false;
-
+  descriptions: { name: string; value: string }[] = [
+    { name: 'IT',value: 'IT' },
+    { name: 'Maintainance',value: 'Maintainance' },
+  ];
+  selectedDescription : string = '';
   constructor(
      private departmentServiceProxy: DepartmentServiceProxy,
      injector: Injector,
@@ -41,7 +45,7 @@ export class CreateOrEditDepartmentComponent extends AppComponentBase{
 }
 save(): void {
   this.saving = true; 
-
+  this.departments.description =this.selectedDescription;
   this.departmentServiceProxy.createOrEdit(this.departments)
    .pipe(finalize(() => { this.saving = false;}))
    .subscribe(() => {

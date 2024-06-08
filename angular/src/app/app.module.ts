@@ -45,6 +45,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateOrEditDepartmentComponent } from './department/create-or-edit-department/create-or-edit-department.component';
 import { TableModule } from 'primeng/table';
 import { CreateOrEditCategoryComponent } from './category/create-or-edit-category/create-or-edit-category.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
     declarations: [
@@ -96,7 +97,8 @@ import { CreateOrEditCategoryComponent } from './category/create-or-edit-categor
         SharedModule,
         NgxPaginationModule,
         NgbModule,
-        TableModule
+        TableModule,
+        DropdownModule,
         
     ],
     providers: []

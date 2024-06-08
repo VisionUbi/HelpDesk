@@ -12,5 +12,6 @@ namespace HelpDesk.Categorys
     public class Category : FullAuditedEntity
     {
         public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
     }
 }

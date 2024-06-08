@@ -11,39 +11,54 @@
   
    
   </div>
-  <div class="modal-body">
+  <div class="col-12 mb-2">
+    <label for="descriptions">Select Type</label>
+    <p-dropdown 
+      [options]="descriptions" 
+      [(ngModel)]="selectedDescription" 
+      name="descriptions"
+      class="p-fluid"
+      optionValue = "name"
+      optionLabel="name" 
+      [showClear]="true"
+      [filter]="true"
+      (onChange)="onchange(selectedDescription)"
+      required
+      placeholder="Select Type" ></p-dropdown>
+    </div>
+  <div class="modal-body" [class.disabled]="!active">
     <form (ngSubmit)="onSubmit()">
  
              <!-- Category and Department Buttons -->
              <div class="row">
               <div class="col-6 mb-2">
-                  <div class="btn-group w-100" dropdown>
-                      <button id="button-category" dropdownToggle type="button" class="btn btn-primary dropdown-toggle w-100"
-                              aria-controls="dropdown-category">
-                          Select Category <span class="caret"></span>
-                      </button>
-                     
-                      <ul id="dropdown-category" *dropdownMenu class="dropdown-menu w-100" role="menu" aria-labelledby="button-category">
-                          <li *ngFor="let category of categorys" class="list-group-item text-center">    
-                             <a class="dropdown-item" >{{category.name}}</a>
-                          </li>
-                      </ul>
-                  </div>
-              </div>
-  
-              <div class="col-6 mb-2">
-                  <div class="btn-group w-100" dropdown>
-                      <button id="button-department" dropdownToggle type="button" class="btn btn-primary dropdown-toggle w-100"
-                              aria-controls="dropdown-department">
-                          Select Department <span class="caret"></span>
-                      </button>
-                      <ul id="dropdown-department" *dropdownMenu class="dropdown-menu w-100" role="menu" aria-labelledby="button-department">
-                          <li *ngFor="let department of departments" class="list-group-item text-center">    
-                            <a class="dropdown-item" >{{department.name}}</a>
-                         </li>
-                    
-                      </ul>
-                  </div>
+                <label for="descriptions">Select Category</label>
+              <p-dropdown
+              [options]="categorys"
+              [(ngModel)]="selectedCategory" 
+              name="category"
+              class="p-fluid"
+              placeholder="Select a Category"
+              optionValue = "value"
+              optionLabel="name" 
+              [showClear]="true"
+              [filter]="true"
+              required
+          ></p-dropdown>
+            </div>
+            <div class="col-6 mb-2">
+              <label for="descriptions">Select Department</label>
+              <p-dropdown 
+                [options]="departments" 
+                [(ngModel)]="selectedDepartment" 
+                name="department"
+                class="p-fluid"
+                optionValue = "value"
+                optionLabel="name" 
+                [showClear]="true"
+                [filter]="true"
+                required
+                placeholder="Select your Department" ></p-dropdown>
               </div>
           </div>
 
@@ -51,27 +66,27 @@
           <!-- Email -->
           <div class="form-group">
             <label for="dataField1">Enter  Email</label>
-            <input type="email" id="dataField1" class="form-control" [(ngModel)]="data.field1" name="field1">
+            <input type="email" id="email" class="form-control" [(ngModel)]="ticket.email" name="field1">
           </div>
          
           <!-- Subject -->
           <div class="form-group">
             <label for="dataField2">Subject</label>
-            <input type="text" id="dataField2" class="form-control" [(ngModel)]="data.field2" name="field2">
+            <input type="text" id="subject" class="form-control" [(ngModel)]="ticket.subject" name="field2">
           </div> 
           <!-- Description -->
           <div class="form-group">
             <label for="dataField2">Description</label>
-            <input type="text" id="dataField2" class="form-control" [(ngModel)]="data.field2" name="field2">
+            <input type="text" id="description" class="form-control" [(ngModel)]="ticket.description" name="field2">
           </div> 
           <!-- Phone -->
           <div class="form-group">
             <label for="dataField2">Phone</label>
-            <input type="number" id="dataField2" class="form-control" [(ngModel)]="data.field2" name="field2">
+            <input type="number" id="phone" class="form-control" [(ngModel)]="ticket.phone" name="field2">
           </div> 
           
       <!-- Add more fields as needed -->
-      <button type="submit" class="btn btn-primary w-100">Submit</button>
+      <button type="submit" class="btn btn-primary w-100" (click)="createTicekt()">Submit</button>
     </form>
   </div>
   

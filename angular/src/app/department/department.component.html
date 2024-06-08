@@ -15,7 +15,21 @@
           </div>
         </div>
       </div>
-      
+      <div class="col-12 mb-2">
+        <label for="descriptions">Filter Data with Type</label>
+        <p-dropdown 
+          [options]="descriptions" 
+          [(ngModel)]="selectedDescription" 
+          name="descriptions"
+          class="p-fluid"
+          optionValue = "name"
+          optionLabel="name" 
+          [showClear]="true"
+          [filter]="true"
+          (onChange)="getDepartments(selectedDescription)"
+          required
+          placeholder="Filter Data with Type" ></p-dropdown>
+        </div>
     <p-table [value]="departments" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr>
@@ -29,7 +43,7 @@
                 <td>  <button
                     type="button"
                     class="btn btn-sm bg-secondary"
-                    (click)="createOrEditProjectFileModal.show(department.id)"
+                    (click)="createOrEditDepartmentModal.show(department.id)"
             >
                 <i class="fas fa-pencil-alt"></i>
                 {{ "Edit" | localize }}
@@ -47,7 +61,7 @@
     </p-table>
 
   </div>
-  <app-create-or-edit-department #createOrEditProjectFileModal (modalSave)="getDepartments()"> </app-create-or-edit-department>
+  <app-create-or-edit-department #createOrEditDepartmentModal (modalSave)="getDepartments(selectedDescription)"> </app-create-or-edit-department>
  
    
   

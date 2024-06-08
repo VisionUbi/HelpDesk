@@ -1,1 +1,122 @@
-<p>my-ticket works!</p>
+
+<div *ngIf="isAdmin">
+    <div class="modal-header">
+        <div class="row">
+        <h5 class="modal-title">All Tickets</h5>
+    </div>
+    </div>
+    <div class="modal-body">   
+        <p-table [value]="tickets" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" 
+        [rows]="10" 
+        [rowsPerPageOptions]="[5,10,20,50,100,500]">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Creator</th>
+                    <th>Creation Date</th>
+                    <th>Description</th>
+                    <th>Department</th>
+                    <th>Phone</th>
+                    <th>Assignee</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                    <th>Submit</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-ticket>
+                <tr>
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.createdBy }}</td>
+                    <td>{{ ticket.creationDate  | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{ ticket.description }}</td>
+                    <td>{{ ticket.departmentName }}</td>
+                    <td>{{ ticket.phone }}</td>
+                    <td>
+                        <p-dropdown 
+                        [options]="ticket.users" 
+                        [(ngModel)]="ticket.assignedTo" 
+                        name="AssignedTo"
+                        optionLabel="name"
+                        optionValue="id"
+                        class="p-fluid"
+                        [showClear]="true"
+                        [filter]="true"
+                        required
+                        placeholder="Select Assignee">
+                    </p-dropdown>
+                    
+                    </td>
+                    <td>
+                        <p-dropdown 
+                        [options]="statuses" 
+                        [(ngModel)]="ticket.status" 
+                        name="Status"
+                        class="p-fluid"
+                        optionValue = "value"
+                        optionLabel="name" 
+                        [showClear]="true"
+                        [filter]="true"
+                        required
+                        placeholder="Select Status" ></p-dropdown>
+                      </td>
+                    <td>{{ ticket.remarks === null ? 'N/A' : ticket.remarks }}</td>
+                    <td>
+                        <button type="submit" class="btn btn-success" (click)="updateTicekt(ticket)">
+                            <i class="fas fa-check-circle"></i> Submit
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+      </div>
+
+   
+</div>
+<div *ngIf="!isAdmin">
+    <div class="modal-header">
+        <div class="row">
+        <h5 class="modal-title">My Tickets</h5>
+    </div>
+    </div>
+    <div class="modal-body">   
+        <p-table [value]="tickets" [tableStyle]="{ 'min-width': '50rem' }"  [paginator]="true" 
+        [rows]="10" 
+        [rowsPerPageOptions]="[5,10,20,50,100,500]">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Creator</th>
+                    <th>Creation Date</th>
+                    <th>Description</th>
+                    <th>Department</th>
+                    <th>Phone</th>
+                    <th>Assignee</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-ticket>
+                <tr>
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.createdBy }}</td>
+                    <td>{{ ticket.creationDate  | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{ ticket.description }}</td>
+                    <td>{{ ticket.departmentName }}</td>
+                    <td>{{ ticket.phone }}</td>
+                    <td>{{ ticket.assignedToName  === null ? 'N/A' : ticket.assignedToName}}</td>
+                    <td>
+                        {{ ticket.status === 0 ? 'Open' : 
+                           ticket.status === 1 ? 'Rejected' : 
+                           ticket.status === 2 ? 'Pending': 
+                           ticket.status === 3 ? 'WaitingForInstrunctions': 
+                           ticket.status === 4 ? 'WaitingForApproval': 
+                           ticket.status === 5 ? 'OutSourced': 
+                           'Unknown' }}
+                      </td>
+                    <td>{{ ticket.remarks === null ? 'N/A' : ticket.remarks }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+      </div>
+    </div>
+    
