@@ -30,7 +30,7 @@ namespace HelpDesk.Tickets
         }
         public async Task CreateCategory(TicketDto input)
         {
-            if (int.Parse(input.Id) != null)
+            if (!string.IsNullOrEmpty(input.Id) && int.TryParse(input.Id, out int id))
             {
                 var exisitingTicket = await _ticketRepository.FirstOrDefaultAsync(int.Parse(input.Id));
                 if(exisitingTicket != null)
